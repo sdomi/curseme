@@ -6,7 +6,7 @@ fi
 
 mkdir -p wrk; cd wrk
 
-wget https://curseforge.overwolf.com/downloads/curseforge-latest-linux.zip
+curl -O https://curseforge.overwolf.com/downloads/curseforge-latest-linux.zip
 7z -y x curseforge-latest-linux.zip
 7z -y x *.AppImage
 grep -Poh 'cfCoreApiKey":".*?"' resources/app/dist/desktop/desktop.js | sed 's/.*://;s/"//g' > ../token

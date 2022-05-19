@@ -2,6 +2,15 @@
 
 Takes curseforge minecraft modpacks and installs them without the closed-source, glibc-dependent curseforge client.
 
+### Dependencies
+
+- p7zip
+- jq
+- bash
+- curl
+- java (well, duh)
+- busybox OR gnu coreutils (tested on busybox ;3)
+
 ### Usage
 
 1. Download a ZIP file from curseforge. This is hidden - curse really wants you to use their application. Go to Files -> Main File -> (click on the name) -> `Download` (NOT `Install`)
