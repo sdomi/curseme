@@ -1,4 +1,8 @@
 #!/bin/bash
+if [[ $1 == '' ]]; then
+	echo "usage: $0 <modpack.zip>"
+	exit 1
+fi
 meow="$(realpath $1)"
 
 mkdir packwrk; cd packwrk
