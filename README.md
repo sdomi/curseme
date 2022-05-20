@@ -22,4 +22,17 @@ Takes curseforge minecraft modpacks and installs them without the closed-source,
 7. Launch `./install.sh`
 8. Profit..?
 
+### TODO
+
+- Fabric support
+- GUI, if I have too much time
+- better urlencoding if the current bodge breaks
+
+### Contact the author (suggestions, DMCA, etc.)
+
+I can be reached for any inquires via my e-mail: me (at) sdomi.pl. I also have a webpage - https://sdomi.pl/
+
+
+
+
 gosh i love not agreeing to TOS
