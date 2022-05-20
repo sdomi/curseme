@@ -25,9 +25,9 @@ if [[ ! -d mods ]]; then
 
 		url="$(curl -s -H "x-api-key: $(cat $token)" \
 				"https://api.curseforge.com/v1/mods/$proj/files/$file" \
-				| jq -r '.data.downloadUrl' \
-				| sed 's/\[/%5b/g;s/\]/%5d/g;'"s/'/%27/g;s/ /%20/g")" #' handling for bad URLs
-		curl -s -o $(basename "$url") -L "$url" || echo "Failed to download $url" &
+				| jq -r '.data.downloadUrl')"
+		url_fix="$(sed 's/\[/%5b/g;s/\]/%5d/g;'"s/'/%27/g;s/ /%20/g" <<< "$url")" #' handling for bad URLs
+		curl -s -o "$(basename "$url")" -L "$url_fix" || echo "Failed to download $url" &
 		printf "."
 	done <<< "$mods"
 	wait
