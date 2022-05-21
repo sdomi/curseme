@@ -42,7 +42,7 @@ if [[ $modloader == *"forge"* ]]; then
 	forge=${modloader/*,forge-/}
 
 	# handling for old forge binary names
-	if [[ $(grep -Poh "(1\.10$|1\.9|1\.8|1\.7|1\.6|1\.5|1\.4|1\.3|1\.2|1\.1)" <<< "$mc") == '' ]]; then	
+	if [[ $(grep -Poh "(1\.10$|1\.9|1\.8|1\.7|1\.6|1\.5|1\.4|1\.3|1\.2|1\.1$)" <<< "$mc") == '' ]]; then	
 		curl -L -O "https://maven.minecraftforge.net/net/minecraftforge/forge/$mc-$forge/forge-$mc-$forge-installer.jar"
 		java -jar "forge-$mc-$forge-installer.jar"
 	else
