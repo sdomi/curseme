@@ -21,8 +21,11 @@ function fetch_version() {
 		return 1
 	fi
 
-	mkdir -p meow; cd meow
+	mkdir -p $1; cd $1
 	curl -o manifest.json "$url"
+	curl -o client.jar "$(jq -r '.downloads.client.url' < manifest.json)"
+	curl -o assets.json "$(jq -r '.assetIndex.url' < manifest.json)"
+
 
 	mew="$(jq -r '.libraries[].downloads | if .classifiers then select(.classifiers["natives-linux"]) | .classifiers["natives-linux"] else .artifact end | "\(.url) \(.path)"' < manifest.json)"
 
@@ -35,8 +38,6 @@ function fetch_version() {
 		curl -o "$path" "$_url"
 	done
 	cd ..
-	curl -o client.jar "$(jq -r '.downloads.client.url' < manifest.json)"
-	curl -o assets.json "$(jq -r '.assetIndex.url' < manifest.json)"
 	
 	# assets
 	mkdir -p assets; cd assets
