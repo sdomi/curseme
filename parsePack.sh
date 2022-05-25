@@ -3,7 +3,7 @@ if [[ $1 == '' ]]; then
 	echo "usage: $0 <modpack.zip>"
 	exit 1
 fi
-token="$(dirname $(realpath $0))/token"
+token="$(dirname "$(realpath $0)")/token"
 meow="$(realpath $1)"
 
 if [[ ! -f "$token" ]]; then
@@ -23,7 +23,7 @@ if [[ ! -d mods ]]; then
 		proj=${line/,*/}
 		file=${line/*,/}
 
-		url="$(curl -s -H "x-api-key: $(cat $token)" \
+		url="$(curl -s -H "x-api-key: $(cat "$token")" \
 				"https://api.curseforge.com/v1/mods/$proj/files/$file" \
 				| jq -r '.data.downloadUrl')"
 		url_fix="$(sed 's/\[/%5b/g;s/\]/%5d/g;'"s/'/%27/g;s/ /%20/g" <<< "$url")" #' handling for bad URLs
