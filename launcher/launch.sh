@@ -12,17 +12,43 @@ function launch() {
 			7z x -onatives/ $i -y
 		done
 	fi
+
+	if [[ $(uname -o) == "Msys" ]]; then # winblows
+		windows_fetch_java
 	
-	/usr/lib/jvm/java-8-openjdk/bin/java \
-		-Xms128M \
-		-Xmx1G \
-		-Djava.library.path=natives/ \
-		-cp $(find libraries/ -type f | tr '\n' ':'):client.jar \
-		$(jq -r '.mainClass' < manifest.json) \
-		--gameDir "$(realpath .)" \
-		--assetsDir "$(realpath .)/assets" \
-		--version $1 \
-		--accessToken "$(jq -r '.accessToken' < ../auth.json)" \
-		--username "$(jq -r '.selectedProfile.name' < ../auth.json)" \
-		--uuid "$(jq -r '.selectedProfile.id' < ../auth.json)"
+		../jdk-18*/bin/java \
+			-Xms128M \
+			-Xmx4G \
+			-Djava.library.path=natives/ \
+			-cp $(find libraries/ -type f | tr '\n' ';')client.jar \
+			$(jq -r '.mainClass' < manifest.json) \
+			--gameDir . \
+			--assetsDir assets \
+			--version $1 \
+			--accessToken "$(jq -r '.accessToken' < ../auth.json)" \
+			--username "$(jq -r '.selectedProfile.name' < ../auth.json)" \
+			--uuid "$(jq -r '.selectedProfile.id' < ../auth.json)"		
+	else
+		java \
+			-Xms128M \
+			-Xmx4G \
+			-Djava.library.path=natives/ \
+			-cp $(find libraries/ -type f | tr '\n' ':')client.jar \
+			$(jq -r '.mainClass' < manifest.json) \
+			--gameDir . \
+			--assetsDir assets \
+			--version $1 \
+			--accessToken "$(jq -r '.accessToken' < ../auth.json)" \
+			--username "$(jq -r '.selectedProfile.name' < ../auth.json)" \
+			--uuid "$(jq -r '.selectedProfile.id' < ../auth.json)"
+	fi
+}
+
+function windows_fetch_java() {
+	if [[ $(ls jdk-18*) == '' ]]; then
+		url="$(curl https://jdk.java.net/18/ | grep windows-x64 | grep -Poh 'https:.*?zip"' | sed 's/"//')"
+
+		curl -o java.zip "$url"
+		7z x java.zip
+	fi
 }

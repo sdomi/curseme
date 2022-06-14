@@ -26,8 +26,11 @@ function fetch_version() {
 	curl -o client.jar "$(jq -r '.downloads.client.url' < manifest.json)"
 	curl -o assets.json "$(jq -r '.assetIndex.url' < manifest.json)"
 
-
-	mew="$(jq -r '.libraries[].downloads | if .classifiers then select(.classifiers["natives-linux"]) | .classifiers["natives-linux"] else .artifact end | "\(.url) \(.path)"' < manifest.json)"
+	if [[ "$(uname -o)" == "Msys" ]]; then # winblows
+		mew="$(jq -r '.libraries[].downloads | if .classifiers then select(.classifiers["natives-windows"]) | .classifiers["natives-windows"] else .artifact end | "\(.url) \(.path)"' < manifest.json)"
+	else
+		mew="$(jq -r '.libraries[].downloads | if .classifiers then select(.classifiers["natives-linux"]) | .classifiers["natives-linux"] else .artifact end | "\(.url) \(.path)"' < manifest.json)"
+	fi
 
 	IFS=$'\n'
 	mkdir -p libraries; cd libraries
