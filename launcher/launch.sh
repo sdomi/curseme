@@ -1,6 +1,10 @@
 #!/bin/bash
 
 function launch() {
+	if [[ "$1" == '' ]]; then
+		echo uh oh
+		exit 1
+	fi
 	cd "$1"
 	mkdir -p natives
 

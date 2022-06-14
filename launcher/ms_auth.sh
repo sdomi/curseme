@@ -4,7 +4,7 @@ function get_client_id() {
 	curl https://raw.githubusercontent.com/PolyMC/PolyMC/develop/CMakeLists.txt | grep Launcher_MSA_CLIENT_ID | awk '{print $2}' | sed 's/"//g'	> client_id 
 }
 
-function login() {
+function ms_login() {
 	res="$(curl "https://login.microsoftonline.com/consumers/oauth2/v2.0/devicecode?client_id=$(cat client_id)&scope=XboxLive.signin%20offline_access")"
 	jq '.message' <<< "$res"
 	echo "Press <return> after authenticating"
