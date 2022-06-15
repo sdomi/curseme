@@ -49,10 +49,12 @@ function launch() {
 }
 
 function windows_fetch_java() {
+	pushd /meow
 	if [[ $(ls jdk-18*) == '' ]]; then
 		url="$(curl https://jdk.java.net/18/ | grep windows-x64 | grep -Poh 'https:.*?zip"' | sed 's/"//')"
 
 		curl -o java.zip "$url"
 		7z x java.zip
 	fi
+	popd
 }
