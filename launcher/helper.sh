@@ -10,7 +10,7 @@ source version.sh
 function _login() {
 	read -p "E-Mail: " login
 	read -s -p "Password: " pass
-	_login "$login" "$pass"
+	login "$login" "$pass"
 
 	cat auth.json
 }
