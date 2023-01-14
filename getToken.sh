@@ -17,4 +17,4 @@ fi
 ## I've been reversing the new API key storage for a few hours and found out that you didn't change the token
 ## you can rickroll me all you'd like, it's not like I'll care ;3
 
-curl https://arch.b4k.co/vg/thread/388569358 | grep -Poh "and put .*? " | sed -E 's/.{8}//' > token
+curl https://arch.b4k.co/vg/thread/388569358 | grep -Po 'and put \K\$.*?(?= as)' > token
